@@ -1,6 +1,6 @@
 {
   "name": "js-pub",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Create global path-referencing functions at run-time.",
   "main": "build/Pub.min.js",
   "scripts": {
