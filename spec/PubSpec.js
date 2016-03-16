@@ -37,6 +37,12 @@ describe('Pub', function() {
 		expect( pub.css('app.css') ).toBe('/public/builds/css/app.css');
 	});
 
+	it('allows base overrides when prepended with at', function() {
+		pub.addPath('at', '@http://testing.com');
+
+		expect( pub.at('foo/bar') ).toBe('http://testing.com/foo/bar');
+	});
+
 	it('can create global pub functions', function() {
 		Pub.globalize({
 			'templates': 'angular/templates',

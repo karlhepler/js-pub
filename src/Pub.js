@@ -27,8 +27,15 @@ var Pub = function Pub(paths, base) {
 	 * @returns {string}
 	 */
 	function path(p) {
+		p = p || '';
+
+		// If there is an at sign, then don't add the base
+		if ( p.indexOf('/@') === 0 ) {
+			return p.replace(/(\/@)?/, '');
+		}
+
 		return pather.finalize(
-			props.base + pather.normalize(p || '')
+			props.base + pather.normalize(p)
 		);
 	};
 
