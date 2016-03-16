@@ -39,8 +39,20 @@ describe('Pub', function() {
 
 	it('allows base overrides when prepended with at', function() {
 		pub.addPath('at', '@http://testing.com');
+		pub.addPath({
+			at2: '@/foo/bar'
+		});
 
 		expect( pub.at('foo/bar') ).toBe('http://testing.com/foo/bar');
+		expect( pub.at2('silly.jpg') ).toBe('/foo/bar/silly.jpg');
+
+		var pub2 = new Pub({
+			tst: '@/foo/bar',
+			tst2: '@http://testing.com'
+		});
+
+		expect( pub2.tst('silly.jpg') ).toBe('/foo/bar/silly.jpg');
+		expect( pub2.tst2('billy.png') ).toBe('http://testing.com/billy.png');
 	});
 
 	it('can create global pub functions', function() {
