@@ -67,4 +67,27 @@ describe('Pub', function() {
 		expect( global.scripts('test.js') ).toBe('/public/builds/scripts/test.js');
 	});
 
+	it('parses variables in the base path', function() {
+		
+		// Add a new variable
+		pub.addVariable('version', 42);
+
+		// Expect exception thrown if we try to overwrite path		
+		expect( function(){pub.addVariable('path', 'foo.jpg');} ).toThrow();
+
+		// Create some paths using variables
+		pub.addPath('var1', 'foo/bar/{{path}}.gz?{{timestamp}}');
+		pub.addPath('var2', 'foo/bar/{{path}}-{{timestamp}}.js?{{version}}');
+		pub.addPath('var3', 'foo/{{timestamp}}/bar/{{timestamp}}/{{version}}');
+		pub.addPath('var4', '@http://google.com/{{version}}{{version}}{{path}}');
+		
+		// Test out those paths
+		var time = Date.now();
+		expect( pub.var1('test.js') ).toBe(`/public/foo/bar/test.js.gz?${time}`);
+		expect( pub.var2('test.js') ).toBe(`/public/foo/bar/test.js-${time}.js?42`);
+		expect( pub.var3('test.js') ).toBe(`/public/foo/${time}/bar/${time}/42/test.js`);
+		expect( pub.var4('test.js') ).toBe("http://google.com/4242test.js");
+
+	});
+
 });
