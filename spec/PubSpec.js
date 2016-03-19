@@ -82,7 +82,7 @@ describe('Pub', function() {
 		pub.addPath('var4', '@http://google.com/{{version}}{{version}}{{path}}');
 		
 		// Test out those paths
-		var time = Date.now();
+		var time = pub.getTimestamp();
 		expect( pub.var1('test.js') ).toBe(`/public/foo/bar/test.js.gz?${time}`);
 		expect( pub.var2('test.js') ).toBe(`/public/foo/bar/test.js-${time}.js?42`);
 		expect( pub.var3('test.js') ).toBe(`/public/foo/${time}/bar/${time}/42/test.js`);
